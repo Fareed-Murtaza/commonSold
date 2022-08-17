@@ -13,9 +13,11 @@ exports.findAll = (req, res) => {
     Inventory.findAll({
       include: [
         {
-            model: Products
+          model: Products,
+          attributes: ['product_name', 'id']
         }
       ],
+      attributes: ['id', 'sku', 'quantity', 'color', 'size', 'cost_cents', 'price_cents']
     })
       .then(data => {
         res.send(data);
