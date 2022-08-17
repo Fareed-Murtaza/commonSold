@@ -17,8 +17,8 @@ exports.protect = (req, res, next) => {
             } else {
                 Object.assign(req, {
                     userId: decoded.userId,
-                    roleId: decoded.roleId,
-                    role: decoded.role
+                    name: decoded.name,
+                    email: decoded.email
                 });
                 next();
             }

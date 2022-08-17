@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
 
   orders.associate = function (models) {
     // associations can be defined here
-    // orders.belongsTo(models.products, { foreignKey: { name: "product_id" }})
+    orders.belongsTo(models.products, { foreignKey: { name: "product_id" }})
   };
   
   return orders;

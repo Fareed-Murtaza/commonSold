@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "rootroot",
-    "database": "common_sold",
+    "database": "common_sold_1",
     "host": "localhost",
     "dialect": "mysql",
     "port": "3306",
@@ -16,6 +16,7 @@
       "dateStrings": true,
       "typeCast": true
     },
+    "timezone": "+05:00", 
     "logging": false
   },
   "test": {
@@ -35,6 +36,7 @@
       "dateStrings": true,
       "typeCast": true
     },
+    "timezone": "+05:00", 
     "logging": false
   },
   "production": {
@@ -54,6 +56,7 @@
       "dateStrings": true,
       "typeCast": true
     },
+    "timezone": "+05:00",
     "logging": false
   }
 }

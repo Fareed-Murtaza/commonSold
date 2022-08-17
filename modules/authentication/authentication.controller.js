@@ -8,7 +8,6 @@ exports.login = async (req, res) => {
     try {
         const joiSchema = Joi.object({
             email: Joi.string().required(),
-            password_hash: Joi.string().required(),
             password_plain: Joi.string().required()
         });
         const { error, value } = joiSchema.validate(req.body);

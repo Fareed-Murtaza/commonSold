@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
 
   products.associate = function (models) {
     // associations can be defined here
-    // products.belongsTo(models.users, { foreignKey: { name: "admin_id" }})
-    // products.hasMany(models.inventory)
+    products.belongsTo(models.users, { foreignKey: { name: "admin_id" }})
+    products.hasMany(models.inventory)
   };
   
   return products;
