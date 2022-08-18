@@ -92,7 +92,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, { timestamps: true })
 
-  orders.associate = function (models) {
+  orders.associate = models => {
     // associations can be defined here
     orders.belongsTo(models.products, { foreignKey: { name: 'product_id' }})
   }

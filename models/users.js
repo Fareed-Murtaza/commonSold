@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, { timestamps: true })
 
-  users.associate = function (models) {
+  users.associate = models => {
     // associations can be defined here
     users.hasMany(models.products, { foreignKey: { name: 'admin_id' }})
   }

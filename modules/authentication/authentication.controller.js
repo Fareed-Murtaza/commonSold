@@ -12,11 +12,9 @@ exports.login = async (req, res) => {
     },
     attributes: attributes.auth
   })
-  .then(user => {
-    const token = jwt.signToken({ userId: user.id, name: user.name, email: user.email })
+  .then(({id, name, email}) => {
+    const token = jwt.signToken({ userId: id, name, email })
     res.status(200).send({ token })
   })
-  .catch(() => {
-    res.status(403).send({ message: 'Incorrect Logins' })
-  }) 
+  .catch(() => res.status(403).send({ message: 'Incorrect Logins' })) 
 }

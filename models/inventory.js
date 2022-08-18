@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, { timestamps: false })
 
-  inventory.associate = function (models) {
+  inventory.associate = models => {
     // associations can be defined here
     inventory.belongsTo(models.products, { foreignKey: { name: 'product_id' }})
   }

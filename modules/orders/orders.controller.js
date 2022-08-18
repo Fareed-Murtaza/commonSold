@@ -1,7 +1,6 @@
-const helper = require('../../utils/helper')
 const db = require('../../models')
+const helper = require('../../utils/helper')
 const { attributes, order } = require('../../utils/constants')
-const { sequelize } = require('../../models')
 
 const Inventory = db.inventory
 const Orders = db.orders
@@ -21,19 +20,14 @@ exports.findAll = (req, res) => {
         }],
         attributes: attributes.order_products
       }],
-      offset, limit,
-      attributes: attributes.orders,
-      order: order.name,
+      offset, limit, order: order.name,
+      attributes: attributes.orders
     })
-      .then(async orders => {
-        let totalSale = await Orders.findAll({
-          attributes: [[sequelize.fn('sum', sequelize.col('total_cents')), 'totalSale']],
-        })
+      .then(async ({count, rows}) => {
+        let sale = await helper.getTotalSale()
+        let { totalSale, average } = helper.getSaleState(sale, count)
 
-        totalSale = +totalSale[0].dataValues.totalSale
-        const average = totalSale/(+orders.count)
-
-        res.send({ totalSale, average, count: orders.count, rows: orders.rows })
+        res.send({ totalSale, average, count, rows })
       })
       .catch(err => {
         res.status(500).send({
