@@ -1,12 +1,11 @@
 const helper = require('../../utils/helper')
 const db = require('../../models')
 const attributes = require('../../utils/constants')
+const { sequelize } = require('../../models')
 
 const Orders = db.orders
 const Products = db.products
 const Inventory = db.inventory
-
-const { sequelize } = require('../../models');
 
 // Find All Orders
 exports.findAll = (req, res) => {
@@ -15,16 +14,14 @@ exports.findAll = (req, res) => {
     var { offset, limit } = helper.getOffsetLimit(page, limit)
 
     Orders.findAndCountAll({
-      include: [
-        {
-          model: Products,
-          include: [{
-            model: Inventory,
-            attributes: attributes.order_product_inventory
-          }],
-          attributes: attributes.order_products
-        }
-      ],
+      include: [{
+        model: Products,
+        include: [{
+          model: Inventory,
+          attributes: attributes.order_product_inventory
+        }],
+        attributes: attributes.order_products
+      }],
       offset, limit,
       attributes: attributes.orders,
       order: [['name', 'ASC']],
@@ -32,10 +29,10 @@ exports.findAll = (req, res) => {
       .then(async orders => {
         let totalSale = await Orders.findAll({
           attributes: [[sequelize.fn('sum', sequelize.col('total_cents')), 'totalSale']],
-        });
+        })
 
-        totalSale = +totalSale[0].dataValues.totalSale;
-        const average = totalSale/(+orders.count);
+        totalSale = +totalSale[0].dataValues.totalSale
+        const average = totalSale/(+orders.count)
 
         res.send({ totalSale, average, count: orders.count, rows: orders.rows })
       })

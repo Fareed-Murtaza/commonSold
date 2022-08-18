@@ -1,4 +1,3 @@
-
 'use strict'
 
 const jwt = require('../utils/jwt')
@@ -11,7 +10,7 @@ const productsRouteHandler = require('../modules/products/router')
 class Routes {
   constructor(app) {
     this.app = app
-    this.version = process.env.API_VERSION;
+    this.version = process.env.API_VERSION
   }
   
   /* creating app Routes starts */

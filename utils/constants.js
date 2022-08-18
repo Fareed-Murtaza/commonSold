@@ -7,4 +7,4 @@ attributes = {
   order_products: ['id', 'product_name'],
 }
 
-module.exports = attributes;
+module.exports = attributes

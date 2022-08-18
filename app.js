@@ -10,13 +10,8 @@ class Server {
     this.app = express()
 
     db.sequelize.sync({ logging: false })
-      .then(() => {
-        console.log('MySQL connected successfully.')
-      })
-      .catch((error) => {
-        console.log(error)
-        console.log('✗ MySQL connection error. Please make sure MySQL is running. ✗')
-      })
+      .then(() => {})
+      .catch((error) => {})
   }
 
   appConfig() {
