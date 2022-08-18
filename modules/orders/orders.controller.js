@@ -10,10 +10,13 @@ const Products = db.products
 exports.findAll = (req, res) => {
   try {
     let { offset, limit } = helper.getOffsetLimit(req.query)
+    let { orderOptions, productOptions } = helper.ordersFilterOptions(req.query)
 
     Orders.findAndCountAll({
+      where: orderOptions,
       include: [{
         model: Products,
+        where: productOptions,
         include: [{
           model: Inventory,
           attributes: attributes.order_product_inventory
@@ -25,9 +28,9 @@ exports.findAll = (req, res) => {
     })
       .then(async ({count, rows}) => {
         let sale = await helper.getTotalSale()
-        let { totalSale, average } = helper.getSaleState(sale, count)
+        let { totalOrders, totalSale, average } = helper.getSaleState(sale)
 
-        res.send({ totalSale, average, count, rows })
+        res.send({ totalSale, average, totalOrders, count, rows })
       })
       .catch(err => {
         res.status(500).send({

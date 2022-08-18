@@ -9,7 +9,7 @@ exports.getOffsetLimit = ({page=0, limit=20}) => {
   return { limit, offset }
 }
 
-exports.getFilterOptions = ({name, price, operator}) => {
+exports.inventoryFilterOptions = ({name, price, operator}) => {
   let productOptions = {}
   let inventoryOptions = {}
   let error = ''
@@ -29,11 +29,39 @@ exports.getFilterOptions = ({name, price, operator}) => {
   return { productOptions, inventoryOptions, error }
 }
 
-exports.getSaleState = (totalSale, totalOrders) => {
+// customer name, email, trasaction id, tracking number
+exports.ordersFilterOptions = ({name, order_status, shipper}) => {
+  let orderOptions = {}
+  let productOptions = {}
+
+  if (name) {
+    orderOptions[Op.or]= [
+      {name: {[Op.like]: '%'+name+'%'}},
+      {email: {[Op.like]: '%'+name+'%'}},
+      {transaction_id: {[Op.like]: '%'+name+'%'}},
+      {tracking_number: {[Op.like]: '%'+name+'%'}},
+    ]
+  }
+
+  if (order_status)
+    orderOptions.order_status= {[Op.like]: '%'+order_status+'%'}
+
+  if (shipper)
+    orderOptions.shipper_name= {[Op.like]: '%'+shipper+'%'}
+  
+  return { orderOptions, productOptions }
+}
+
+exports.getSaleState = async totalSale => {
+
+  const totalOrders = await Orders.count()
+
+  console.log('totalOrders: ', totalOrders)
+
   totalSale = +totalSale
   let average = totalSale/(+totalOrders)
 
-  return { totalSale, average }
+  return { totalSale, average, totalOrders }
 }
 
 exports.getTotalSale = async () => {

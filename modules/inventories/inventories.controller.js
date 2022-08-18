@@ -9,7 +9,7 @@ const Products = db.products
 exports.findAll = (req, res) => {
   try {
     var { offset, limit } = helper.getOffsetLimit(req.query)
-    let { productOptions, inventoryOptions, error } = helper.getFilterOptions(req.query)
+    let { productOptions, inventoryOptions, error } = helper.inventoryFilterOptions(req.query)
 
     if (error) return res.status(500).send({error})
 
