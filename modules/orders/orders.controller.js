@@ -37,7 +37,7 @@ exports.findAll = (req, res) => {
         totalSale = +totalSale[0].dataValues.totalSale;
         const average = totalSale/(+orders.count);
 
-        res.send({ totalSale, average, orders })
+        res.send({ totalSale, average, count: orders.count, rows: orders.rows })
       })
       .catch(err => {
         res.status(500).send({
