@@ -30,7 +30,7 @@ exports.findAll = (req, res) => {
         let sale = await helper.getTotalSale()
         let { totalOrders, totalSale, average } = await helper.getSaleState(sale)
 
-        res.send({ totalSale, average, totalOrders, count, rows })
+        res.send({ totalSale, average, count: totalOrders, rows })
       })
       .catch(err => {
         res.status(500).send({
