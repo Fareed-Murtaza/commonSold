@@ -27,7 +27,10 @@ exports.findAll = (req, res) => {
       attributes: attributes.inventory_products,
       order: [['product_name', 'ASC']],
     })
-      .then(data => res.send(data))
+      .then(data => {
+        let list = helper.destructureObject(data.rows)
+        res.send({ count: data.count, rows: list })
+      })
       .catch(err => {
         res.status(500).send({
           message: err.message || 'Some error occurred while retrieving inventories.'

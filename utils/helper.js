@@ -26,3 +26,25 @@ exports.getFilterOptions = function (name, price, operator) {
   
   return { productOptions, inventoryOptions, error }
 }
+
+exports.destructureObject = function (products) {
+  let object = [];
+
+  products.forEach(p => {
+    p.inventories.forEach(i => {
+      object.push({
+        product_id: p.id,
+        product_name: p.product_name,
+        inventory_id: i.id,
+        sku: i.sku,
+        quantity: i.quantity,
+        color: i.color,
+        size: i.size,
+        cost_cents: i.cost_cents,
+        price_cents: i.price_cents
+      })
+    })
+  })
+
+  return object
+}
