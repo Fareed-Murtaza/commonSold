@@ -12,7 +12,7 @@ exports.login = async (req, res) => {
     },
     attributes: attributes.auth
   })
-  .then(({id, name, email}) => {
+  .then(({ id, name, email }) => {
     const token = jwt.signToken({ userId: id, name, email })
     res.status(200).send({ token })
   })

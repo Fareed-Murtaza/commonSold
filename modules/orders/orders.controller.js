@@ -27,7 +27,7 @@ exports.findAll = (req, res) => {
       offset, limit, order,
       attributes: attributes.orders
     })
-      .then(async ({rows}) => {
+      .then(async ({ rows }) => {
         let sale = await helper.getTotalSale()
         let { totalOrders, totalSale, average } = await helper.getSaleState(sale)
 
