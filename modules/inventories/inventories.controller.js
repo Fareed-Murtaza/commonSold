@@ -13,18 +13,18 @@ exports.findAll = (req, res) => {
 
     if (error) return res.status(500).send({error})
 
-    Products.findAndCountAll({
-      where: productOptions,
+    Inventory.findAndCountAll({
+      where: inventoryOptions,
       include: [{
-        where: inventoryOptions,
-        model: Inventory,
-        attributes: attributes.inventory,
+        model: Products,
+        where: productOptions,
+        attributes: attributes.inventory_products,
+        order: order.product_name,
       }],
-      offset, limit,
-      attributes: attributes.inventory_products,
-      order: order.product_name
+      offset, limit, 
+      attributes: attributes.inventory,
     })
-      .then(({count, rows}) => res.send({ count, rows: helper.destructureObject(rows) }))
+      .then(inventory => res.send(inventory))
       .catch(err => {
         res.status(500).send({
           message: err.message || 'Some error occurred while retrieving inventories.'
