@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = (sequelize, DataTypes) => {
   const products = sequelize.define('products', {
@@ -10,13 +10,13 @@ module.exports = (sequelize, DataTypes) => {
     product_type: DataTypes.STRING,
     shipping_price: DataTypes.INTEGER,
     note: DataTypes.TEXT,
-  }, { timestamps: false });
+  }, { timestamps: true })
 
   products.associate = function (models) {
     // associations can be defined here
-    products.belongsTo(models.users, { foreignKey: { name: "admin_id" }})
-    products.hasMany(models.inventory, { foreignKey: { name: "product_id" }})
-  };
+    products.belongsTo(models.users, { foreignKey: { name: 'admin_id' }})
+    products.hasMany(models.inventory, { foreignKey: { name: 'product_id' }})
+  }
   
-  return products;
-};
+  return products
+}

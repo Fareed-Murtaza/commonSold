@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = (sequelize, DataTypes) => {
   const orders = sequelize.define('orders', {
@@ -23,15 +23,13 @@ module.exports = (sequelize, DataTypes) => {
     payment_date: DataTypes.DATE,
     shipped_date: DataTypes.DATE,
     tracking_number: DataTypes.TEXT,
-    tax_total_cents: DataTypes.INTEGER,
-    created_at: DataTypes.DATE,
-    updated_at: DataTypes.DATE,
-  }, { timestamps: false });
+    tax_total_cents: DataTypes.INTEGER
+  }, { timestamps: true })
 
   orders.associate = function (models) {
     // associations can be defined here
-    orders.belongsTo(models.products, { foreignKey: { name: "product_id" }})
-  };
+    orders.belongsTo(models.products, { foreignKey: { name: 'product_id' }})
+  }
   
-  return orders;
-};
+  return orders
+}

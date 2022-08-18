@@ -1,24 +1,17 @@
+'use strict'
 
-'use strict';
-const productsController = require('./products.controller');
+const productsController = require('./products.controller')
+const middleware = require('../../utils/middleware')
+
 const express = require('express')
 const router = express.Router()
 
-router.post('/', (req, res) => {
-    productsController.create(req, res);
-});
-router.get('/', (req, res) => {
-    productsController.findAll(req, res);
-});
-router.get('/:productId', (req, res) => {
-    productsController.findById(req, res);
-});
+router.post('/', middleware.product, productsController.create)
 
-router.put('/:productId', (req, res) => {
-    productsController.update(req, res);
-});
-router.delete('/:productId', (req, res) => {
-    productsController.deleteById(req, res);
-});
+router.get('/', productsController.findAll)
+router.get('/:productId', productsController.findById)
 
-module.exports = router;
+router.put('/:productId', productsController.update)
+router.delete('/:productId', productsController.deleteById)
+
+module.exports = router

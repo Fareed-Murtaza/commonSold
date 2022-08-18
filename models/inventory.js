@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = (sequelize, DataTypes) => {
   const inventory = sequelize.define('inventory', {
@@ -14,12 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     width: DataTypes.DOUBLE,
     height: DataTypes.DOUBLE,
     note: DataTypes.TEXT,
-  }, { timestamps: false });
+  }, { timestamps: false })
 
   inventory.associate = function (models) {
     // associations can be defined here
-    inventory.belongsTo(models.products, { foreignKey: { name: "product_id" }})
-  };
+    inventory.belongsTo(models.products, { foreignKey: { name: 'product_id' }})
+  }
   
-  return inventory;
-};
+  return inventory
+}

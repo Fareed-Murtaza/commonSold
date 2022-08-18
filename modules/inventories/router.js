@@ -1,11 +1,10 @@
+'use strict'
 
-'use strict';
-const express = require("express");
-const router = express.Router();
-const inventoriesController = require('./inventories.controller');
+const express = require('express')
+const inventoriesController = require('./inventories.controller')
 
-router.get('/', (req, res) => {
-    inventoriesController.findAll(req, res);
-});
+const router = express.Router()
 
-module.exports = router;
+router.get('/', inventoriesController.findAll)
+
+module.exports = router

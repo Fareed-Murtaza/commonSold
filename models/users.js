@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = (sequelize, DataTypes) => {
   const users = sequelize.define('users', {
@@ -16,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
     is_enabled: DataTypes.BOOLEAN,
     billing_plan: DataTypes.STRING,
     trial_starts_at: DataTypes.DATE,
-  }, { timestamps: false });
+  }, { timestamps: true })
 
   users.associate = function (models) {
     // associations can be defined here
-    users.hasMany(models.products, { foreignKey: { name: "admin_id" }})
-  };
+    users.hasMany(models.products, { foreignKey: { name: 'admin_id' }})
+  }
   
-  return users;
-};
+  return users
+}
