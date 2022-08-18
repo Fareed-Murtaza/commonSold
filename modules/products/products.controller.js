@@ -1,4 +1,5 @@
 const helper = require('../../utils/helper')
+const {order} = require('../../utils/constants')
 const db = require('../../models')
 
 const Products = db.products
@@ -38,11 +39,10 @@ exports.create = async (req, res) => {
 // Find All Products
 exports.findAll = (req, res) => {
   try {
-    var { page, limit } = req.query
-    var { offset, limit } = helper.getOffsetLimit(page, limit)
+    let { offset, limit } = helper.getOffsetLimit(req.query)
 
-    Products.findAndCountAll({ offset, limit, order: [['product_name', 'ASC']] })
-      .then(data => {res.send(data)})
+    Products.findAndCountAll({ offset, limit, order: order.product_name })
+      .then(data => res.send(data))
       .catch(err => {
         res.status(500).send({
           message: err.message || 'Some error occurred while retrieving products.'
@@ -59,7 +59,7 @@ exports.findAll = (req, res) => {
 exports.findById = (req, res) => {
   try {
     Products.findOne({where: { id: req.params.productId }})
-      .then(data => {res.send(data)})
+      .then(data => res.send(data))
       .catch(err => {
         res.status(500).send({
           message: err.message || 'Some error occurred while retrieving products.'

@@ -1,17 +1,16 @@
 const helper = require('../../utils/helper')
 const db = require('../../models')
-const attributes = require('../../utils/constants')
+const { attributes, order } = require('../../utils/constants')
 const { sequelize } = require('../../models')
 
+const Inventory = db.inventory
 const Orders = db.orders
 const Products = db.products
-const Inventory = db.inventory
 
 // Find All Orders
 exports.findAll = (req, res) => {
   try {
-    var { page, limit } = req.query
-    var { offset, limit } = helper.getOffsetLimit(page, limit)
+    let { offset, limit } = helper.getOffsetLimit(req.query)
 
     Orders.findAndCountAll({
       include: [{
@@ -24,7 +23,7 @@ exports.findAll = (req, res) => {
       }],
       offset, limit,
       attributes: attributes.orders,
-      order: [['name', 'ASC']],
+      order: order.name,
     })
       .then(async orders => {
         let totalSale = await Orders.findAll({
