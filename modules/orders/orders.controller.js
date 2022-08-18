@@ -1,6 +1,6 @@
 const db = require('../../models')
 const helper = require('../../utils/helper')
-const { attributes, order } = require('../../utils/constants')
+const { attributes } = require('../../utils/constants')
 
 const Inventory = db.inventory
 const Orders = db.orders
@@ -11,6 +11,7 @@ exports.findAll = (req, res) => {
   try {
     let { offset, limit } = helper.getOffsetLimit(req.query)
     let { orderOptions, productOptions } = helper.ordersFilterOptions(req.query)
+    let order = helper.getOrderBy(req.query)
 
     Orders.findAndCountAll({
       where: orderOptions,
@@ -23,10 +24,10 @@ exports.findAll = (req, res) => {
         }],
         attributes: attributes.order_products
       }],
-      offset, limit, order: order.name,
+      offset, limit, order,
       attributes: attributes.orders
     })
-      .then(async ({count, rows}) => {
+      .then(async ({rows}) => {
         let sale = await helper.getTotalSale()
         let { totalOrders, totalSale, average } = await helper.getSaleState(sale)
 
