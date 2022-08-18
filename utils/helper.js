@@ -53,10 +53,7 @@ exports.ordersFilterOptions = ({name, order_status, shipper}) => {
 }
 
 exports.getSaleState = async totalSale => {
-
   const totalOrders = await Orders.count()
-
-  console.log('totalOrders: ', totalOrders)
 
   totalSale = +totalSale
   let average = totalSale/(+totalOrders)
