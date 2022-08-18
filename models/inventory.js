@@ -2,18 +2,54 @@
 
 module.exports = (sequelize, DataTypes) => {
   const inventory = sequelize.define('inventory', {
-    quantity: DataTypes.INTEGER,
-    color: DataTypes.TEXT,
-    size: DataTypes.TEXT,
-    weight: DataTypes.DOUBLE,
-    price_cents: DataTypes.INTEGER,
-    sale_price_cents: DataTypes.INTEGER,
-    cost_cents: DataTypes.INTEGER,
-    sku: DataTypes.STRING,
-    length: DataTypes.DOUBLE,
-    width: DataTypes.DOUBLE,
-    height: DataTypes.DOUBLE,
-    note: DataTypes.TEXT,
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    color: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    size: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    weight: {
+      type: DataTypes.DOUBLE,
+      allowNull: false
+    },
+    price_cents: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    sale_price_cents: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    cost_cents: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    sku: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    length: {
+      type: DataTypes.DOUBLE,
+      allowNull: false
+    },
+    width: {
+      type: DataTypes.DOUBLE,
+      allowNull: false
+    },
+    height: {
+      type: DataTypes.DOUBLE,
+      allowNull: false
+    },
+    note: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
   }, { timestamps: false })
 
   inventory.associate = function (models) {
