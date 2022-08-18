@@ -5,6 +5,8 @@ const Orders = db.orders
 const Products = db.products
 const Inventory = db.inventory
 
+const { sequelize } = require("../../models");
+
 // Find All Orders
 exports.findAll = (req, res) => {
   try {
@@ -28,7 +30,14 @@ exports.findAll = (req, res) => {
       attributes: ['id', 'name', 'email', 'order_status', 'total_cents', 'transaction_id', 'shipper_name', 'tracking_number']
     })
       .then(async orders => {
-        res.send(orders)
+        let totalSale = await Orders.findAll({
+          attributes: [[sequelize.fn('sum', sequelize.col('total_cents')), 'totalSale']],
+        });
+
+        totalSale = +totalSale[0].dataValues.totalSale;
+        const average = totalSale/(+orders.count);
+
+        res.send({ totalSale, average, orders })
       })
       .catch(err => {
         res.status(500).send({
