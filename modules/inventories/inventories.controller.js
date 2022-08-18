@@ -18,7 +18,8 @@ exports.findAll = (req, res) => {
         }
       ],
       offset, limit,
-      attributes: ['id', 'sku', 'quantity', 'color', 'size', 'cost_cents', 'price_cents']
+      attributes: ['id', 'sku', 'quantity', 'color', 'size', 'cost_cents', 'price_cents'],
+      order: [['sku', 'ASC']],
     })
       .then(data => res.send(data))
       .catch(err => {

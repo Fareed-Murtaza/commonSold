@@ -27,7 +27,8 @@ exports.findAll = (req, res) => {
         }
       ],
       offset, limit,
-      attributes: ['id', 'name', 'email', 'order_status', 'total_cents', 'transaction_id', 'shipper_name', 'tracking_number']
+      attributes: ['id', 'name', 'email', 'order_status', 'total_cents', 'transaction_id', 'shipper_name', 'tracking_number'],
+      order: [['name', 'ASC']],
     })
       .then(async orders => {
         let totalSale = await Orders.findAll({

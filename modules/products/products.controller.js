@@ -40,7 +40,7 @@ exports.findAll = (req, res) => {
     var { page, limit } = req.query
     var { offset, limit } = helper.getOffsetLimit(page, limit)
 
-    Products.findAndCountAll({ offset, limit })
+    Products.findAndCountAll({ offset, limit, order: [['product_name', 'ASC']] })
       .then(data => {res.send(data)})
       .catch(err => {
         res.status(500).send({
