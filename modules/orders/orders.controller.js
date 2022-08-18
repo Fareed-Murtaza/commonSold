@@ -28,7 +28,7 @@ exports.findAll = (req, res) => {
     })
       .then(async ({count, rows}) => {
         let sale = await helper.getTotalSale()
-        let { totalOrders, totalSale, average } = helper.getSaleState(sale)
+        let { totalOrders, totalSale, average } = await helper.getSaleState(sale)
 
         res.send({ totalSale, average, totalOrders, count, rows })
       })

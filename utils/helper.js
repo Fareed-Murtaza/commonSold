@@ -29,7 +29,6 @@ exports.inventoryFilterOptions = ({name, price, operator}) => {
   return { productOptions, inventoryOptions, error }
 }
 
-// customer name, email, trasaction id, tracking number
 exports.ordersFilterOptions = ({name, order_status, shipper}) => {
   let orderOptions = {}
   let productOptions = {}
