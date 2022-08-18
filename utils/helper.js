@@ -67,3 +67,15 @@ exports.getTotalSale = async () => {
 
   return sale[0].dataValues.totalSale
 }
+
+exports.getOrderBy = ({sort_column, sort_order}) => {
+  let order = []
+
+  if(sort_column && sort_order) {
+    order.push([
+      [sort_column, sort_order]
+    ])
+  }
+  
+  return order
+}

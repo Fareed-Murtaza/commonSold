@@ -1,5 +1,4 @@
 const helper = require('../../utils/helper')
-const {order} = require('../../utils/constants')
 const db = require('../../models')
 
 const Products = db.products
@@ -40,8 +39,9 @@ exports.create = async (req, res) => {
 exports.findAll = (req, res) => {
   try {
     let { offset, limit } = helper.getOffsetLimit(req.query)
+    let order = helper.getOrderBy(req.query)
 
-    Products.findAndCountAll({ offset, limit, order: order.product_name })
+    Products.findAndCountAll({ offset, limit, order})
       .then(data => res.send(data))
       .catch(err => {
         res.status(500).send({
