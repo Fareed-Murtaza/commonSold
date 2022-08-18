@@ -5,40 +5,21 @@ const attributes = require('../../utils/constants')
 const Inventory = db.inventory
 const Products = db.products
 
-
-const Op = db.Sequelize.Op;
-
-// Find All Videos 
+// Find All inventories 
 exports.findAll = (req, res) => {
   try {
-    var { page, limit } = req.query
-    var { offset, limit } = helper.getOffsetLimit(page, limit)
+    var { page, limit, name, price, operator } = req.query
 
+    var { offset, limit } = helper.getOffsetLimit(page, limit)    
+    let { productOptions, inventoryOptions, error } = helper.getFilterOptions(name, price, operator)
 
-    // By name(product_name, sku)
-
-    let name = req.query.name;
-    let productOptions = {};
-    if (name)
-      productOptions.product_name= {[Op.like]: '%'+name+'%'}
-      
-    // if (priceFrom && priceTo)
-    //   options.where.price = {$between: [priceFrom, priceTo]}
-    // if (delivery)
-    //   options.where.delivery = delivery
-
-    // Product.findAll(options)
-    //   .then(products => {
-    //       console.log(products)
-    //       res.render('product', { products: products });
-    //   });
-
-    console.log('filter: ', name, productOptions)
-
+    if (error) 
+      return res.status(500).send({error})
 
     Products.findAndCountAll({
       where: productOptions,
       include: [{
+        where: inventoryOptions,
         model: Inventory,
         attributes: attributes.inventory,
       }],
@@ -49,7 +30,7 @@ exports.findAll = (req, res) => {
       .then(data => res.send(data))
       .catch(err => {
         res.status(500).send({
-          message: err.message || 'Some error occurred while retrieving video.'
+          message: err.message || 'Some error occurred while retrieving inventories.'
         })
       })
   } catch (err) {
