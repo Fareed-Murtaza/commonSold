@@ -10,8 +10,13 @@ class Server {
     this.app = express()
 
     db.sequelize.sync({ logging: false })
-      .then(() => {})
-      .catch((error) => {})
+      .then(() => {
+        console.log('Database connected successfully.')
+      })
+      .catch((error) => {
+        console.log(error)
+        console.log('✗ Database connection error. Please make sure database is running. ✗')
+      })
   }
 
   appConfig() {
