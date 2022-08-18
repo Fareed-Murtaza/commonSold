@@ -1,5 +1,4 @@
-const Joi = require('@hapi/joi')
-
+const helper = require('../../utils/helper')
 const db = require('../../models')
 const Products = db.products
 
@@ -38,7 +37,10 @@ exports.create = async (req, res) => {
 // Find All Products
 exports.findAll = (req, res) => {
   try {
-    Products.findAll({})
+    var { page, limit } = req.query
+    var { offset, limit } = helper.getOffsetLimit(page, limit)
+
+    Products.findAndCountAll({ offset, limit })
       .then(data => {res.send(data)})
       .catch(err => {
         res.status(500).send({

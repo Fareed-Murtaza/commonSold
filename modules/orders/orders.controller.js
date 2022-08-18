@@ -1,3 +1,4 @@
+const helper = require('../../utils/helper')
 const db = require('../../models')
 
 const Orders = db.orders
@@ -7,7 +8,10 @@ const Inventory = db.inventory
 // Find All Orders
 exports.findAll = (req, res) => {
   try {
-    Orders.findAll({
+    var { page, limit } = req.query
+    var { offset, limit } = helper.getOffsetLimit(page, limit)
+
+    Orders.findAndCountAll({
       include: [
         {
           model: Products,
@@ -20,6 +24,7 @@ exports.findAll = (req, res) => {
           attributes: ['id', 'product_name']
         }
       ],
+      offset, limit,
       attributes: ['id', 'name', 'email', 'order_status', 'total_cents', 'transaction_id', 'shipper_name', 'tracking_number']
     })
       .then(async orders => {
