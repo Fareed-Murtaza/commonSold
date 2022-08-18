@@ -1,5 +1,6 @@
 const helper = require('../../utils/helper')
 const db = require('../../models')
+const attributes = require('../../utils/constants')
 
 const Inventory = db.inventory
 const Products = db.products
@@ -11,14 +12,12 @@ exports.findAll = (req, res) => {
     var { offset, limit } = helper.getOffsetLimit(page, limit)
 
     Inventory.findAndCountAll({
-      include: [
-        {
-          model: Products,
-          attributes: ['product_name', 'id']
-        }
-      ],
+      include: [{
+        model: Products,
+        attributes: attributes.inventory_products
+      }],
       offset, limit,
-      attributes: ['id', 'sku', 'quantity', 'color', 'size', 'cost_cents', 'price_cents'],
+      attributes: attributes.inventory,
       order: [['sku', 'ASC']],
     })
       .then(data => res.send(data))

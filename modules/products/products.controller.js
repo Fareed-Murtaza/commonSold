@@ -1,5 +1,6 @@
 const helper = require('../../utils/helper')
 const db = require('../../models')
+
 const Products = db.products
 
 // Create and Save a new Product

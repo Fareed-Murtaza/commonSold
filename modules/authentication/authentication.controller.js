@@ -1,5 +1,6 @@
 const db = require('../../models')
 const jwt = require('../../utils/jwt')
+const attributes = require('../../utils/constants')
 
 const Users = db.users
 
@@ -9,7 +10,7 @@ exports.login = async (req, res) => {
       email: req.body.email.trim(),
       password_plain: req.body.password
     },
-    attributes: ['id', 'name', 'email']
+    attributes: attributes.auth
   })
   .then(user => {
     const token = jwt.signToken({ userId: user.id, name: user.name, email: user.email })

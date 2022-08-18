@@ -1,11 +1,12 @@
 const helper = require('../../utils/helper')
 const db = require('../../models')
+const attributes = require('../../utils/constants')
 
 const Orders = db.orders
 const Products = db.products
 const Inventory = db.inventory
 
-const { sequelize } = require("../../models");
+const { sequelize } = require('../../models');
 
 // Find All Orders
 exports.findAll = (req, res) => {
@@ -17,17 +18,15 @@ exports.findAll = (req, res) => {
       include: [
         {
           model: Products,
-          include: [
-            {
-              model: Inventory,
-              attributes: ['color', 'size']
-            }
-          ],
-          attributes: ['id', 'product_name']
+          include: [{
+            model: Inventory,
+            attributes: attributes.order_product_inventory
+          }],
+          attributes: attributes.order_products
         }
       ],
       offset, limit,
-      attributes: ['id', 'name', 'email', 'order_status', 'total_cents', 'transaction_id', 'shipper_name', 'tracking_number'],
+      attributes: attributes.orders,
       order: [['name', 'ASC']],
     })
       .then(async orders => {
