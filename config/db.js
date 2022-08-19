@@ -16,4 +16,4 @@ module.exports = {
     typeCast: process.env.DB_POOL_DIALECT_OPTIONS_TYPECAST
   },
   timezone: process.env.DB_TIMEZONE
-};
+}
