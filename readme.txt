@@ -1,6 +1,17 @@
 # Local Development Setup
 
+## Technology stack
+
+- Node 16.15.1
+
 ## Installation
+
+### Requirements
+
+Before you get started, the following needs to be installed:
+  * **Node** 16.15.1
+  * **NPM** 8.12.2
+  * **nodemon** 2.0.19
 
 ### Requirements
 
@@ -10,16 +21,22 @@
 
     ```bash
     git clone 
-    cd rmi-react-frontend
+    cd commonSold
     ```
 
-2.  Install the required packages by running the following command in the project root directory:
+2.  Install nodemon by running the following command in the terminal:
 
     ```bash
-    npm install
+    sudo npm install -g --force nodemon
     ```
 
-3.  Run server:
+3.  Install the required packages by running the following command in the project root directory:
+
+    ```bash
+    npm i
+    ```
+
+4.  Run server:
 
     ```
     node app.js
