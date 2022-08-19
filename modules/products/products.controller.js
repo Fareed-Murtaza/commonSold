@@ -1,5 +1,7 @@
 const helper = require('../../utils/helper')
 const db = require('../../models')
+const { type, styles, brands } = require('../../utils/constants')
+
 
 const Products = db.products
 
@@ -50,6 +52,39 @@ exports.findAll = (req, res) => {
           message: err.message || 'Some error occurred while retrieving products.'
         })
       })
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || 'Some error occurred.'
+    })
+  }
+}
+
+// Find All Products Types
+exports.findAllTypes = (req, res) => {
+  try {
+    res.send(type)
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || 'Some error occurred.'
+    })
+  }
+}
+
+// Find All Products Brands
+exports.findAllBrands = (req, res) => {
+  try {
+    res.send(brands)
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || 'Some error occurred.'
+    })
+  }
+}
+
+// Find All Products Styles
+exports.findAllStyles = (req, res) => {
+  try {
+    res.send(styles)
   } catch (err) {
     res.status(500).send({
       message: err.message || 'Some error occurred.'
