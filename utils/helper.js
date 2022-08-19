@@ -68,14 +68,18 @@ exports.getTotalSale = async () => {
   return sale[0].dataValues.totalSale
 }
 
-exports.getOrderBy = ({sort_column, sort_order}) => {
+exports.getOrderBy = ({sort_table_name, sort_column, sort_order}) => {
+  let inventoryOrder = []
+  let productOrder = []
   let order = []
+  let orderByError = ''
 
   if(sort_column && sort_order) {
-    order.push([
-      [sort_column, sort_order]
-    ])
+    if(sort_table_name == 'inventories') inventoryOrder.push([[sort_column, sort_order]])
+    else if(sort_table_name == 'products') productOrder.push([[sort_column, sort_order]])
+    else if(sort_table_name == 'order') order.push([[sort_column, sort_order]])
+    else orderByError='Parameters missing for sorting.'
   }
   
-  return order
+  return { order, inventoryOrder, productOrder, orderByError }
 }

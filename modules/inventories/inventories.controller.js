@@ -1,6 +1,6 @@
 const db = require('../../models')
 const helper = require('../../utils/helper')
-const { attributes, order } = require('../../utils/constants')
+const { attributes } = require('../../utils/constants')
 
 const Inventory = db.inventory
 const Products = db.products
@@ -10,8 +10,10 @@ exports.findAll = (req, res) => {
   try {
     var { offset, limit } = helper.getOffsetLimit(req.query)
     let { productOptions, inventoryOptions, error } = helper.inventoryFilterOptions(req.query)
+    let { inventoryOrder, productOrder, orderByError } = helper.getOrderBy(req.query)
 
     if (error) return res.status(500).send({error})
+    if (orderByError) return res.status(500).send({orderByError})
 
     Inventory.findAndCountAll({
       where: inventoryOptions,
@@ -19,9 +21,9 @@ exports.findAll = (req, res) => {
         model: Products,
         where: productOptions,
         attributes: attributes.inventory_products,
-        order: order.product_name,
+        order: productOrder
       }],
-      offset, limit, 
+      offset, limit, order: inventoryOrder,
       attributes: attributes.inventory,
     })
       .then(inventory => res.send(inventory))
