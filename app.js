@@ -11,7 +11,7 @@ class Server {
 
     db.sequelize.sync({ logging: false })
       .then(() => {})
-      .catch((error) => {})
+      .catch(() => {})
   }
 
   appConfig() {
